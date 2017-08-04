@@ -39,9 +39,3 @@ def getPlayerLink(sportType, playerFirstName, playerLastName):
         arrayIndex+=1
     print(linkArray)
     return linkArray
-    
-def main():
-    getPlayerLink('baseball', 'David', 'Aardsma')
-    
-if __name__ == "__main__":
-    main()

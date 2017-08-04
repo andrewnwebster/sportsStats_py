@@ -27,19 +27,12 @@ def getStats(playerNamePretty, playerLink):
         counter+=1
         try:
             if table['id'] == 'batting_standard':
-                return table
+                return (0,table)
             elif table['id'] == 'pitching_standard':
-                return table
+                return (1,table)
             else:
                 pass
         except keyError:
             pass
     print('meh')
     print(counter)
-    
-def main():
-    temp=getStats('David Aardsma','https://www.baseball-reference.com/players/a/aardsda01.shtml')
-    print(temp.encode(sys.stdout.encoding, errors='replace'))
-
-if __name__ == "__main__":
-    main()
