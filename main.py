@@ -8,9 +8,10 @@ def main():
     statsList=()
     temp=getStats.getStats('David Aardsma','https://www.baseball-reference.com/players/a/aardsda01.shtml')
     tempClass=statsClass.statsClass[temp[0]]
-    if tempClass == 0:
+    tempClassID=temp[0]
+    if tempClassID == 0:
         statsList=statsTemplate.battingStats()
-    elif tempClass == 1:
+    elif tempClassID == 1:
         statsList=statsTemplate.pitchingStats()
 
 
@@ -18,9 +19,9 @@ def main():
     #just for printing
     temp_raw=(tempStats.encode(sys.stdout.encoding, errors='replace'))
     
-    temp_clean=cleanStats.cleanStats(tempClass, statsList, tempStats)
-    print(temp_clean)
-    print(tempClass)
+    temp_clean=cleanStats.cleanStats(tempClassID, statsList, tempStats)
+    #print(temp_clean)
+    #print(tempClass)
 
 if __name__ == "__main__":
     main()
