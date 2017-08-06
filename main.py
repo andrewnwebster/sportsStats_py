@@ -2,11 +2,13 @@ from links import getStats
 from links import cleanStats
 from clss import statsTemplate
 from clss import statsClass
+import pandas as pd
+from internal import statsDictToDF as sdf
 import sys
 
 def main():
     statsList=()
-    temp=getStats.getStats('David Aardsma','https://www.baseball-reference.com/players/a/aardsda01.shtml')
+    temp=getStats.getStats('Derek Jeter','https://www.baseball-reference.com/players/j/jeterde01.shtml')
     tempClass=statsClass.statsClass[temp[0]]
     tempClassID=temp[0]
     if tempClassID == 0:
@@ -16,12 +18,12 @@ def main():
 
 
     tempStats=temp[1]
-    #just for printing
+
     temp_raw=(tempStats.encode(sys.stdout.encoding, errors='replace'))
-    
-    temp_clean=cleanStats.cleanStats(tempClassID, statsList, tempStats)
-    #print(temp_clean)
-    #print(tempClass)
+    temp_clean_dict=cleanStats.cleanStats(tempClassID, statsList, tempStats)
+    temp_clean_DF=sdf.statsDictToDF(temp_clean_dict)
+
+    print(list(temp_clean_DF))
 
 if __name__ == "__main__":
     main()
