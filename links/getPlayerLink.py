@@ -17,15 +17,32 @@ sportType:
 from bs4 import BeautifulSoup
 #for pulling site from web
 import urllib.request
+import re
+
+def getPlayerNameFromUser(fNamelNameList):
+    tempList=['','']
+    pattern = r'[A-Za-z]+'
+
+    while True:
+        tempList[0]=input('first name?')
+        tempList[1]=input('last name?')
+
+        fName=tempList[0]
+        lName=tempList[1]
+    
+        if re.match(pattern, fName) and re.match(pattern, lName):
+            return tempList
+        else:
+            print('tryAgain')
 
 def getPlayerLink(sportType, playerFirstName, playerLastName):
     arrayIndex=0
-    linkArray=[0]
+    linkArray=[]
     
     #Find first letter of lastName
     lNamefLetter=playerLastName[0]
     #fullPlayerTable for lNamefLetter
-    playerPageLink='http://www.baseball-reference.com/players/'+lNamefLetter.lower()+"/"  
+    playerPageLink='https://www.baseball-reference.com/players/'+lNamefLetter.lower()+"/"  
     
     #player full name
     playerfNamelName=playerFirstName+' '+playerLastName
@@ -34,8 +51,9 @@ def getPlayerLink(sportType, playerFirstName, playerLastName):
     soup = BeautifulSoup(html, 'html.parser')
     tempLinkList = soup.find_all('a', string=playerfNamelName)
     for link in tempLinkList:
+
         temp=str(link.get('href'))
-        linkArray[arrayIndex]='http://www.baseball-reference.com/'+temp
+        print(temp)
+        linkArray.extend(['http://www.baseball-reference.com/'+temp])
         arrayIndex+=1
-    print(linkArray)
-    return linkArray
+    return linkArray[0]
