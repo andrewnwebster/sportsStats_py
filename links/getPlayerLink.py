@@ -18,20 +18,21 @@ from bs4 import BeautifulSoup
 #for pulling site from web
 import urllib.request
 import re
+import sys
 
 def getPlayerNameFromUser(fNamelNameList):
-    tempList=['','']
+    playerNameDict={'fname':'','lname':''}
     pattern = r'[A-Za-z]+'
 
     while True:
-        tempList[0]=input('first name?')
-        tempList[1]=input('last name?')
+        playerNameDict['fname']=input('first name?')
+        playerNameDict['lname']=input('last name?')
 
-        fName=tempList[0]
-        lName=tempList[1]
+        fName=playerNameDict['fname']
+        lName=playerNameDict['lname']
     
         if re.match(pattern, fName) and re.match(pattern, lName):
-            return tempList
+            return playerNameDict
         else:
             print('tryAgain')
 
@@ -49,11 +50,32 @@ def getPlayerLink(sportType, playerFirstName, playerLastName):
     response = urllib.request.urlopen(playerPageLink)
     html = response.read()
     soup = BeautifulSoup(html, 'html.parser')
-    tempLinkList = soup.find_all('a', string=playerfNamelName)
-    for link in tempLinkList:
 
+    for item in soup.find_all('a', string=playerfNamelName):
+        for link in item.find_all('a'):
+            print(link.get('href'))
+
+
+    tempLinkList = soup.find_all('a', string=playerfNamelName)
+    tempLinkList = removeDuplicatesFromList(tempLinkList)
+    for link in tempLinkList:
         temp=str(link.get('href'))
-        print(temp)
         linkArray.extend(['http://www.baseball-reference.com/'+temp])
         arrayIndex+=1
-    return linkArray[0]
+
+    linkArray=removeDuplicatesFromList(linkArray)
+
+    print('Array Contents | {0}'.format(linkArray))
+    print('Length | {0}'.format(len(linkArray)))
+
+
+    if len(linkArray) == 1:
+        return linkArray[0]
+    else:
+        print('Bad Link Count in getPlayerLink')
+        sys.exit()
+
+def removeDuplicatesFromList(x):
+    #print(list(dict.fromkeys(x)))
+    return list(dict.fromkeys(x))
+

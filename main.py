@@ -15,10 +15,12 @@ def main():
 
     userInputPlayerName=gpl.getPlayerNameFromUser(playerName)
     generatedPlayerLink=gpl.getPlayerLink('baseball'
-                                        , userInputPlayerName[0]
-                                        , userInputPlayerName[1])
+                                        , userInputPlayerName['fname']
+                                        , userInputPlayerName['lname'])
 
-    temp=getStats.getStats(userInputPlayerName[0]+' '+userInputPlayerName[1],generatedPlayerLink)
+    temp=getStats.getStats(\
+    	userInputPlayerName['fname']+' '+userInputPlayerName['lname'],\
+    	generatedPlayerLink)
 
     tempClass=statsClass.statsClass[temp[0]]
     tempClassID=temp[0]
