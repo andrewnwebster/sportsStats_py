@@ -8,20 +8,20 @@ from internal import statsDictToDF as sdf
 from internal import graphing as grp
 import sys
 
+
+
 def main():
 
     statsList=()
     playerName=[]
 
+
     userInputPlayerName=gpl.getPlayerNameFromUser(playerName)
-    generatedPlayerLink=gpl.getPlayerLink('baseball'
-                                        , userInputPlayerName['fname']
-                                        , userInputPlayerName['lname'])
+    generatedPlayerLink=gpl.getPlayerLink('baseball', userInputPlayerName['fname'], userInputPlayerName['lname'])
+    temp=getStats.getStats(userInputPlayerName['fname']+' '+userInputPlayerName['lname'],generatedPlayerLink)
 
-    temp=getStats.getStats(\
-    	userInputPlayerName['fname']+' '+userInputPlayerName['lname'],\
-    	generatedPlayerLink)
-
+    #(Batter or Pitcher, then statsDF)
+    #TO DO: Change to getting batter and pitcher stats -- and a flag if empty
     tempClass=statsClass.statsClass[temp[0]]
     tempClassID=temp[0]
     if tempClassID == 0:

@@ -7,10 +7,8 @@ sportsStats Main
 """
 
 '''
-
 sportType: 
     'baseball':
-
 '''
 
 #for web scraping
@@ -52,9 +50,14 @@ def getPlayerLink(sportType, playerFirstName, playerLastName):
     soup = BeautifulSoup(html, 'html.parser')
 
     for item in soup.find_all('a', string=playerfNamelName):
+        print(item)
         for link in item.find_all('a'):
             print(link.get('href'))
 
+    print('Test')
+    for item in soup.find_all('p', playerfNamelName):
+        print(item)
+    print('End Test')
 
     tempLinkList = soup.find_all('a', string=playerfNamelName)
     tempLinkList = removeDuplicatesFromList(tempLinkList)
@@ -68,13 +71,19 @@ def getPlayerLink(sportType, playerFirstName, playerLastName):
     print('Array Contents | {0}'.format(linkArray))
     print('Length | {0}'.format(len(linkArray)))
 
-
     if len(linkArray) == 1:
         return linkArray[0]
-    else:
-        print('Bad Link Count in getPlayerLink')
+    elif len(linkArray) == 0:
+        print('Bad Link Count {0} in getPlayerLink'.format(len(linkArray)))
         sys.exit()
+    else:
+        chooseFromList(linkArray)
+        return linkArray[0]
 
+def chooseFromList(x):
+    print('Please Choose Player')
+    pass
+        
 def removeDuplicatesFromList(x):
     #print(list(dict.fromkeys(x)))
     return list(dict.fromkeys(x))
